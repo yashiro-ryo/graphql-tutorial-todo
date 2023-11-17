@@ -145,6 +145,7 @@ const TaskListPage = () => {
       <CreateTaskModal
         isVisible={isCreateTaskModalVisible}
         setVisible={setCreateTaskModalVisible}
+        refetch={refetch}
       />
     </div>
   );
