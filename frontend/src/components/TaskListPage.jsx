@@ -140,6 +140,7 @@ const TaskListPage = () => {
         body={body}
         isComplete={isComplete}
         createdAt={createdAt}
+        refetch={refetch}
       />
       {/* create task modal */}
       <CreateTaskModal

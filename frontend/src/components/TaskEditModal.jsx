@@ -14,7 +14,11 @@ const UPDATE_TASK = gql`
 
 const TaskEditModal = (props) => {
   const [bodyInputValue, setValue] = useState("");
-  const [updateTaskBody] = useMutation(UPDATE_TASK);
+  const [updateTaskBody] = useMutation(UPDATE_TASK, {
+    onCompleted() {
+      props.refetch();
+    },
+  });
 
   const closeModal = () => props.setVisible(false);
   const onUpdateBodyInput = (e) => setValue(e.target.value);
