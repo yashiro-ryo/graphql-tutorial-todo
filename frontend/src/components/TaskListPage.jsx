@@ -49,9 +49,17 @@ const TaskListPage = () => {
   const [isComplete, setComplete] = useState(false);
   const [createdAt, setCreatedAt] = useState("");
 
-  const { data, loading, error } = useQuery(GET_TASKS);
-  const [updateTaskState] = useMutation(UPDATE_TASK);
-  const [deleteTask] = useMutation(DELETE_TASK);
+  const { data, loading, error, refetch } = useQuery(GET_TASKS);
+  const [updateTaskState] = useMutation(UPDATE_TASK, {
+    onCompleted() {
+      refetch();
+    },
+  });
+  const [deleteTask] = useMutation(DELETE_TASK, {
+    onCompleted() {
+      refetch();
+    },
+  });
 
   const showEditor = (id, body, isComplete, createdAt) => {
     // update edit target
