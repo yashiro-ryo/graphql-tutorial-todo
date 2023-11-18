@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useQuery, useMutation, gql } from "@apollo/client";
+import { useState, useEffect } from "react";
+import { useQuery, useMutation, gql, useSubscription } from "@apollo/client";
 
 import TaskEditModal from "./TaskEditModal";
 import CreateTaskModal from "./CreateTaskModal";
@@ -39,6 +39,17 @@ const DELETE_TASK = gql`
   }
 `;
 
+const NOTIFY_TASK_UPDATED = gql`
+  subscription NotifyTaskUpdated {
+    notifyTaskUpdated {
+      id
+      body
+      isComplete
+      createdAt
+    }
+  }
+`;
+
 const TaskListPage = () => {
   const [isEditModalVisible, setEditModalVisible] = useState(false);
   const [isCreateTaskModalVisible, setCreateTaskModalVisible] = useState(false);
@@ -60,6 +71,14 @@ const TaskListPage = () => {
       refetch();
     },
   });
+
+  const notifyTaskUpdatedSubscriber = useSubscription(NOTIFY_TASK_UPDATED);
+
+  useEffect(() => {
+    console.log("NOTIFY TASK UPDATED");
+    console.log(notifyTaskUpdatedSubscriber.data);
+    refetch();
+  }, [notifyTaskUpdatedSubscriber.data, refetch]);
 
   const showEditor = (id, body, isComplete, createdAt) => {
     // update edit target
