@@ -21,7 +21,7 @@ git clone https://github.com/yashiro-ryo/graphql-tutorial-task
 ```bash
 cd backend
 npm install
-npx nodemon index.js
+npm run dev
 ```
 
 フロントエンドの起動
