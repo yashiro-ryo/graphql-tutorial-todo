@@ -83,6 +83,7 @@ const resolvers = {
         createdAt: String(new Date().getTime()),
       };
       tasks.splice(index, 1, newTask);
+      pubsub.publish("NOTIFY_TASK_UPDATED", { notifyTaskUpdated: tasks });
       return newTask;
     },
     updateCompleteState: (
@@ -100,6 +101,7 @@ const resolvers = {
         createdAt: String(new Date().getTime()),
       };
       tasks.splice(index, 1, newTask);
+      pubsub.publish("NOTIFY_TASK_UPDATED", { notifyTaskUpdated: tasks });
       return newTask;
     },
     deleteTask: (_: any, args: { id: string }) => {
@@ -109,6 +111,7 @@ const resolvers = {
       }
       const deleteTargetTask = tasks[index];
       tasks.splice(index, 1);
+      pubsub.publish("NOTIFY_TASK_UPDATED", { notifyTaskUpdated: tasks });
       return deleteTargetTask;
     },
   },
